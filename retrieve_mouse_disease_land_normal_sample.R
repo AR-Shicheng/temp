@@ -49,5 +49,5 @@ JOIN mouse_disease_b38.gene_fpkm fpkm ON fpkm.sample_index = spl.sample_index
 JOIN mouse_disease_b38.gene_annotation ann ON ann.gene_index = fpkm.gene_index
 WHERE spl.sample_index IN ({unlisted_samples}) AND FPKM > 0
 ")
-expression <- datastore$query(sql)
+expression <- datastore$query(sql) %>% select(sample_id,tissue,fpkm,gene_name)
 write.table(expression,file="mouse_normal_samples_from_mouse_diseaseland_20240607_N2.tsv",quote=F,sep="\t",row.names = F)
