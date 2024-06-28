@@ -10,9 +10,9 @@ datastore <- opi()
 fetch_epilepsy_studies <- function(organism) {
   sql <- glue("
     SELECT *
-    FROM {organism}_disease_b6.comparisons
-    JOIN {organism}_disease_b6.comparison_data USING (comparison_index)
-    JOIN {organism}_disease_b6.gene_annotation USING (gene_index)
+    FROM {organism}_disease_b38.comparisons
+    JOIN {organism}_disease_b38.comparison_data USING (comparison_index)
+    JOIN {organism}_disease_b38.gene_annotation USING (gene_index)
     WHERE case_disease_state LIKE '%epilep%'
     LIMIT 10
   ")
@@ -20,8 +20,8 @@ fetch_epilepsy_studies <- function(organism) {
   return(epilepsy_studies)
 }
 
-# Fetch epilepsy studies for rat
-rat_epilepsy_studies <- fetch_epilepsy_studies('rat')
+# Fetch epilepsy studies for human
+human_epilepsy_studies <- fetch_epilepsy_studies('human')
 
 # View the first few rows of the fetched data
 print(head(rat_epilepsy_studies))
@@ -40,10 +40,10 @@ fetch_differential_expression <- function(organism, disease_state) {
       comparisons.case_disease_state,
       comparisons.control_disease_state,
       comparisons.comparison_index
-    FROM {organism}_disease_b6.comparisons AS comparisons
-    JOIN {organism}_disease_b6.comparison_data AS comparison_data
+    FROM {organism}_disease_b38.comparisons AS comparisons
+    JOIN {organism}_disease_b38.comparison_data AS comparison_data
     ON comparisons.comparison_index = comparison_data.comparison_index
-    JOIN {organism}_disease_b6.gene_annotation AS gene_annotation
+    JOIN {organism}_disease_b38.gene_annotation AS gene_annotation
     ON comparison_data.gene_index = gene_annotation.gene_index
     WHERE comparisons.case_disease_state LIKE '%{disease_state}%'
   ")
