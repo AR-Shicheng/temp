@@ -43,7 +43,7 @@ print(sample_list)
 unlisted_samples <- paste0(sample_list$sample_index,collapse=",")
 
 sql <- stringr::str_glue("
-SELECT sample_id,tissue,disease_state,fpkm,gene_name
+SELECT sample_id,tissue,disease_state,fpkm*tpm_scaling_factor as tpm,gene_name
 FROM mouse_disease_b38.samples spl
 JOIN mouse_disease_b38.gene_fpkm fpkm ON fpkm.sample_index = spl.sample_index
 JOIN mouse_disease_b38.gene_annotation ann ON ann.gene_index = fpkm.gene_index
